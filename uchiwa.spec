@@ -10,7 +10,7 @@
 
 Name:           %{repo}
 Version:        %{commit}
-Release:        1%{?dist}
+Release:        2%{?dist}
 Summary:        Uchiwa is a simple dashboard for the Sensu monitoring framework, built with Go and AngularJS.
 License:        MIT
 URL:            https://%{import_path}
@@ -74,7 +74,7 @@ go test ./uchiwa
 %files
 %defattr(-, uchiwa, uchiwa, -)
 %doc CHANGELOG.md README.md LICENSE
-%{_bindir}/uchiwa
+%attr(0755, root, root) %{_bindir}/uchiwa
 %{_unitdir}/uchiwa.service
 %dir %{_sysconfdir}/%{name}
 %config(noreplace) %{_sysconfdir}/%{name}/%{name}.json
@@ -89,7 +89,6 @@ exit 0
 
 %post
 %systemd_post uchiwa.service
-
 %preun
 %systemd_preun uchiwa.service
 
@@ -97,6 +96,9 @@ exit 0
 %systemd_postun uchiwa.service
 
 %changelog
+* Tue Jul 28 2015 Lon Hohberger <lon@redhat.com> - 0.8.0-2
+- Fix permissions on /usr/bin/uchiwa
+
 * Tue May 05 2015 Graeme Gillies <ggillies@redhat.com> - 0.8.0-1
 - Update to version 0.8.0
 
